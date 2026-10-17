@@ -1,0 +1,24 @@
+{
+  "key": "derivative_finite_diff",
+  "title": "Central-difference derivative of sin(x)*exp(-x/4)",
+  "kind": "numerical",
+  "problem_type": "derivative",
+  "method": "finite_difference",
+  "description": "Step-halving refinement with an error estimate; verified against the symbolic derivative.",
+  "tags": [
+    "differentiation",
+    "step size"
+  ],
+  "assumptions": [
+    "f smooth near x",
+    "h not so small that round-off dominates"
+  ],
+  "expected": {},
+  "parameters": {
+    "expression": "sin(x) * exp(-x/4)",
+    "x": 1.5,
+    "mode": "central",
+    "derivative_order": 1,
+    "tolerance": 1e-10
+  }
+}

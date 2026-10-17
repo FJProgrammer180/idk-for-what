@@ -1,0 +1,22 @@
+{
+  "key": "integral_trap_error_study",
+  "title": "Trapezoid convergence study for 1/(1+x^2)",
+  "kind": "numerical",
+  "problem_type": "integration",
+  "method": "trapezoidal",
+  "description": "Adaptive panel doubling shows O(h^2) error decay; integral should approach 2*atan(3)/... use the run table.",
+  "tags": [
+    "convergence study"
+  ],
+  "assumptions": [
+    "integrand bounded on [-3,3]"
+  ],
+  "expected": {},
+  "parameters": {
+    "expression": "1/(1 + x^2)",
+    "a": -3.0,
+    "b": 3.0,
+    "tolerance": 1e-10,
+    "max_iterations": 24
+  }
+}

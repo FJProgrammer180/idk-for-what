@@ -1,0 +1,28 @@
+{
+  "key": "root_bisection_sqrt2",
+  "title": "Bisection on x^2 - 2 = 0",
+  "kind": "numerical",
+  "problem_type": "root_finding",
+  "method": "bisection",
+  "description": "Locate sqrt(2) with guaranteed bracketed convergence and print the interval-halving history.",
+  "tags": [
+    "root finding",
+    "verification",
+    "teaching"
+  ],
+  "assumptions": [
+    "f is continuous on [1,2]",
+    "f(1) and f(2) have opposite signs"
+  ],
+  "expected": {
+    "root": 1.4142135623730951,
+    "tolerance": 1e-12
+  },
+  "parameters": {
+    "expression": "x^2 - 2",
+    "a": 1.0,
+    "b": 2.0,
+    "tolerance": 1e-12,
+    "max_iterations": 60
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "key": "sim_shm_underdamped",
+  "title": "Damped harmonic oscillator, underdamped regime",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "simple_harmonic_motion",
+  "description": "m x'' = -k x - c x' with zeta < 1; energy decay compared with the undamped invariant.",
+  "tags": [
+    "oscillations",
+    "damping"
+  ],
+  "assumptions": [
+    "linear spring, viscous damping, massless spring"
+  ],
+  "expected": {},
+  "parameters": {
+    "mass": 1.0,
+    "spring_constant": 25.0,
+    "damping": 0.6,
+    "x0": 1.0,
+    "v0": 0.0,
+    "n_points": 1500,
+    "solver": "DOP853"
+  }
+}

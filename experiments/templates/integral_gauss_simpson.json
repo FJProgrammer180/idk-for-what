@@ -1,0 +1,26 @@
+{
+  "key": "integral_gauss_simpson",
+  "title": "Simpson integration of the Gaussian bell",
+  "kind": "numerical",
+  "problem_type": "integration",
+  "method": "simpson",
+  "description": "Integrate exp(-x^2/2)/sqrt(2*pi) over [-2,2]; compare against the symbolic/reference value.",
+  "tags": [
+    "quadrature",
+    "error estimate"
+  ],
+  "assumptions": [
+    "integrand continuous and smooth on [-2,2]",
+    "even number of panels"
+  ],
+  "expected": {
+    "integral": 0.9544997361036416
+  },
+  "parameters": {
+    "expression": "exp(-x^2/2)/sqrt(2*pi)",
+    "a": -2.0,
+    "b": 2.0,
+    "tolerance": 1e-12,
+    "panels": 64
+  }
+}

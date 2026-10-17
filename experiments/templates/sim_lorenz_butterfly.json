@@ -1,0 +1,29 @@
+{
+  "key": "sim_lorenz_butterfly",
+  "title": "Lorenz attractor (chaotic reference case)",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "dynamical_system",
+  "description": "sigma=10, rho=28, beta=8/3 from t=0; illustrates sensitivity, so only short-time agreement is meaningful.",
+  "tags": [
+    "chaos",
+    "dynamical systems"
+  ],
+  "assumptions": [
+    "idealised 3-mode truncation of Rayleigh-Benard convection"
+  ],
+  "expected": {},
+  "parameters": {
+    "preset": "lorenz",
+    "sigma": 10.0,
+    "rho": 28.0,
+    "beta": 2.6666667,
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "duration": 30.0,
+    "n_points": 4000,
+    "rtol": 1e-11,
+    "atol": 1e-13
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "key": "linear_lu_3x3",
+  "title": "LU factorisation of a 3x3 structural matrix",
+  "kind": "numerical",
+  "problem_type": "linear_system",
+  "method": "lu_decomposition",
+  "description": "PA=LU with partial pivoting; the verifier independently reconstructs A from the stored factors.",
+  "tags": [
+    "linear algebra",
+    "LU"
+  ],
+  "assumptions": [
+    "square non-singular matrix"
+  ],
+  "expected": {
+    "solution": [
+      0.6,
+      1.2,
+      0.6
+    ]
+  },
+  "parameters": {
+    "matrix": [
+      [
+        0,
+        2,
+        1
+      ],
+      [
+        1,
+        1,
+        2
+      ],
+      [
+        2,
+        1,
+        1
+      ]
+    ],
+    "vector": [
+      3,
+      3,
+      3
+    ]
+  }
+}

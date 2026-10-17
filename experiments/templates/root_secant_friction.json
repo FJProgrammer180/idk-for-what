@@ -1,0 +1,24 @@
+{
+  "key": "root_secant_friction",
+  "title": "Secant solve of a transcendental friction model",
+  "kind": "numerical",
+  "problem_type": "root_finding",
+  "method": "secant",
+  "description": "Solve tan(x) = 2x (transcendental) without needing a derivative; reports the superlinear convergence rate.",
+  "tags": [
+    "root finding",
+    "derivative free"
+  ],
+  "assumptions": [
+    "two distinct starting points",
+    "f continuous between them"
+  ],
+  "expected": {},
+  "parameters": {
+    "expression": "tan(x) - 2*x",
+    "x0": 1.0,
+    "x1": 1.3,
+    "tolerance": 1e-13,
+    "max_iterations": 40
+  }
+}

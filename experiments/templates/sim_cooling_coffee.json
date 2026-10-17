@@ -1,0 +1,24 @@
+{
+  "key": "sim_cooling_coffee",
+  "title": "Newton cooling of a hot drink",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "newton_cooling",
+  "description": "85 C coffee in a 22 C room; compare the numerical solution with T0 + (T0-Tenv) e^{-kt} and read off the time constant.",
+  "tags": [
+    "thermodynamics",
+    "lumped model"
+  ],
+  "assumptions": [
+    "uniform body temperature (Bi << 1)",
+    "constant ambient temperature and h"
+  ],
+  "expected": {},
+  "parameters": {
+    "T0": 358.15,
+    "T_env": 295.15,
+    "cooling_rate": 0.006,
+    "duration": 3000.0,
+    "n_points": 900
+  }
+}
