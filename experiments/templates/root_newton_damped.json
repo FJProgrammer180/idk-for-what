@@ -1,0 +1,26 @@
+{
+  "key": "root_newton_damped",
+  "title": "Newton-Raphson on cos(x) - x",
+  "kind": "numerical",
+  "problem_type": "root_finding",
+  "method": "newton_raphson",
+  "description": "Dottie number with an analytic derivative supplied; watch quadratic convergence in the step column.",
+  "tags": [
+    "root finding",
+    "quadratic convergence"
+  ],
+  "assumptions": [
+    "f is differentiable near the root",
+    "f'(x) stays away from zero"
+  ],
+  "expected": {
+    "root": 0.7390851332151607
+  },
+  "parameters": {
+    "expression": "cos(x) - x",
+    "derivative_expression": "-sin(x) - 1",
+    "x0": 0.5,
+    "tolerance": 1e-14,
+    "max_iterations": 25
+  }
+}

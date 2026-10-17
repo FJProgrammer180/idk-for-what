@@ -1,0 +1,25 @@
+{
+  "key": "sim_projectile_drag",
+  "title": "Projectile with quadratic drag",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "projectile_motion",
+  "description": "Same launch with drag enabled - no closed form exists, so the report states that validation is solver-consistency only.",
+  "tags": [
+    "mechanics",
+    "nonlinear drag"
+  ],
+  "assumptions": [
+    "drag quadratic in speed with constant coefficient"
+  ],
+  "expected": {},
+  "parameters": {
+    "v0": 60.0,
+    "angle_deg": 38.0,
+    "drag_coefficient_total": 0.35,
+    "mass": 0.145,
+    "launch_height": 1.2,
+    "g": 9.80665,
+    "n_points": 3000
+  }
+}

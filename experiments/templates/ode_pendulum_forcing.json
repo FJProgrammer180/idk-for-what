@@ -1,0 +1,45 @@
+{
+  "key": "ode_pendulum_forcing",
+  "title": "Damped driven pendulum as a first-order system",
+  "kind": "numerical",
+  "problem_type": "ode_ivp",
+  "method": "ode_ivp",
+  "description": "theta'' = -b*theta' - (g/L) sin(theta) + A cos(w t); time series returned for plotting.",
+  "tags": [
+    "ODE",
+    "dynamics"
+  ],
+  "assumptions": [
+    "RHS continuous and Lipschitz over the window"
+  ],
+  "expected": {},
+  "parameters": {
+    "expressions": [
+      "y2",
+      "-b*y2 - (g/L)*sin(y1) + A*cos(w*t)"
+    ],
+    "state_names": [
+      "theta",
+      "omega"
+    ],
+    "t_span": [
+      0,
+      40
+    ],
+    "y0": [
+      0.4,
+      0.0
+    ],
+    "solver": "DOP853",
+    "rtol": 1e-10,
+    "atol": 1e-12,
+    "n_points": 1200,
+    "constants": {
+      "b": 0.15,
+      "g": 9.81,
+      "L": 1.0,
+      "A": 0.9,
+      "w": 0.85
+    }
+  }
+}

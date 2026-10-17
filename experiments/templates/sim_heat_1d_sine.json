@@ -1,0 +1,26 @@
+{
+  "key": "sim_heat_1d_sine",
+  "title": "1-D heat diffusion of a sine mode",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "heat_1d",
+  "description": "Explicit FTCS on u_t = alpha u_xx; peak decay compared with exp(-alpha (pi/L)^2 t) and the stability number reported.",
+  "tags": [
+    "PDE",
+    "stability"
+  ],
+  "assumptions": [
+    "constant alpha",
+    "r = alpha dt/dx^2 <= 1/2 enforced",
+    "Dirichlet zero boundaries"
+  ],
+  "expected": {},
+  "parameters": {
+    "alpha": 1.0,
+    "length": 1.0,
+    "grid_points": 121,
+    "duration": 0.05,
+    "initial_condition": "sine",
+    "boundary": "dirichlet_zero"
+  }
+}

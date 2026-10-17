@@ -1,0 +1,28 @@
+{
+  "key": "sim_projectile_vacuum",
+  "title": "Projectile motion in vacuum (analytically checkable)",
+  "kind": "simulation",
+  "problem_type": "simulation",
+  "method": "projectile_motion",
+  "description": "40 m/s at 45 degrees with no drag; the run must reproduce R = v0^2 sin(2*theta)/g.",
+  "tags": [
+    "mechanics",
+    "validation"
+  ],
+  "assumptions": [
+    "uniform g, flat non-rotating frame, point mass",
+    "no drag, wind, spin or lift"
+  ],
+  "expected": {
+    "analytical_range": 163.15459407646853
+  },
+  "parameters": {
+    "v0": 40.0,
+    "angle_deg": 45.0,
+    "drag_coefficient_total": 0.0,
+    "launch_height": 0.0,
+    "g": 9.80665,
+    "mass": 1.0,
+    "n_points": 1200
+  }
+}

@@ -1,0 +1,40 @@
+# --- Python / backend -------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Local runtime state: the SQLite database, uploaded files, generated plots, PDFs and
+# datasets are per-instance artifacts. Never commit them - they contain user data.
+backend/data/
+*.db
+*.sqlite3
+
+# Secrets and local overrides. `.env.example` is committed; the real file is not.
+.env
+.env.local
+
+# --- Node / frontend ----------------------------------------------------------
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+.yarn/
+.npm-install.log
+*.tsbuildinfo
+
+# --- Editors / OS -------------------------------------------------------------
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Installer transcripts from a local bootstrap; never part of the tree.
+*.log
