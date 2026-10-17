@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Tailwind v4 is configured in CSS: `@theme` below declares the palette and
+ * the type scale, so utilities like `bg-surface` and `text-muted` exist without a JS config.
+ * Light values are the defaults; `data-theme="dark"` on <html> swaps them, which is why no
+ * component hard-codes a colour pair for a specific mode.
+ */
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --color-canvas: var(--tone-canvas);
+  --color-surface: var(--tone-surface);
+  --color-surface-2: var(--tone-surface-2);
+  --color-surface-3: var(--tone-surface-3);
+  --color-border: var(--tone-border);
+  --color-ink: var(--tone-ink);
+  --color-muted: var(--tone-muted);
+  --color-accent: var(--tone-accent);
+  --color-accent-soft: var(--tone-accent-soft);
+  --color-accent-ink: var(--tone-accent-ink);
+
+  --radius-card: 14px;
+  --shadow-panel: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 24px -12px rgb(15 23 42 / 0.18);
+}
+
+:root,
+[data-theme="light"] {
+  --tone-canvas: #f6f7fb;
+  --tone-surface: #ffffff;
+  --tone-surface-2: #f1f3f8;
+  --tone-surface-3: #e6e9f2;
+  --tone-border: #d7dbe6;
+  --tone-ink: #171b26;
+  --tone-muted: #5d6579;
+  --tone-accent: #3730a3;
+  --tone-accent-soft: #eef0ff;
+  --tone-accent-ink: #262071;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --tone-canvas: #0b0e16;
+  --tone-surface: #131826;
+  --tone-surface-2: #1b2233;
+  --tone-surface-3: #232c42;
+  --tone-border: #2c3549;
+  --tone-ink: #e8ecf6;
+  --tone-muted: #97a1b8;
+  --tone-accent: #a5b4fc;
+  --tone-accent-soft: #1c2340;
+  --tone-accent-ink: #dfe4ff;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--tone-border);
+  }
+
+  html,
+  body {
+    background: var(--tone-canvas);
+    color: var(--tone-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--tone-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--tone-accent) 28%, transparent);
+  }
+}
+
+@layer components {
+  .panel {
+    background: var(--tone-surface);
+    border: 1px solid var(--tone-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tone-muted);
+    font-weight: 600;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .field {
+    width: 100%;
+    background: var(--tone-surface-2);
+    border: 1px solid var(--tone-border);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 14px;
+    color: var(--tone-ink);
+    font-family: var(--font-mono);
+  }
+
+  .field::placeholder {
+    color: color-mix(in oklab, var(--tone-muted) 75%, transparent);
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: #e11d48;
+  }
+
+  .table-grid {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .table-grid th,
+  .table-grid td {
+    text-align: left;
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--tone-border);
+    vertical-align: top;
+  }
+
+  .table-grid th {
+    color: var(--tone-muted);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .table-grid tbody tr:hover {
+    background: color-mix(in oklab, var(--tone-accent) 5%, transparent);
+  }
+}
+
+/* Rendered markdown (src/lib/markdown.ts). Class names here must match what it emits. */
+.markdown {
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.markdown > *:first-child {
+  margin-top: 0;
+}
+.markdown > *:last-child {
+  margin-bottom: 0;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  margin: 1.3em 0 0.5em;
+  line-height: 1.25;
+  font-weight: 650;
+}
+.markdown h1 {
+  font-size: 1.35rem;
+}
+.markdown h2 {
+  font-size: 1.18rem;
+}
+.markdown h3 {
+  font-size: 1.05rem;
+}
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-size: 0.95rem;
+  color: var(--tone-muted);
+}
+.markdown p {
+  margin: 0.7em 0;
+}
+.markdown ul.md-list,
+.markdown ol.md-list {
+  margin: 0.7em 0 0.7em 1.15em;
+  padding-left: 0.4em;
+}
+.markdown ul.md-list {
+  list-style: disc;
+}
+.markdown ol.md-list {
+  list-style: decimal;
+}
+.markdown li {
+  margin: 0.28em 0;
+}
+.markdown li > p {
+  margin: 0.25em 0;
+}
+.markdown blockquote {
+  margin: 0.9em 0;
+  padding: 0.4em 0.9em;
+  border-left: 3px solid var(--tone-accent);
+  background: var(--tone-accent-soft);
+  border-radius: 0 8px 8px 0;
+  color: var(--tone-ink);
+}
+.markdown hr {
+  margin: 1.4em 0;
+  border: none;
+  border-top: 1px solid var(--tone-border);
+}
+.markdown code.inline-code {
+  background: var(--tone-surface-2);
+  border: 1px solid var(--tone-border);
+  border-radius: 6px;
+  padding: 0.5px 5px;
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+.markdown pre.code-block {
+  background: var(--tone-surface-2);
+  border: 1px solid var(--tone-border);
+  border-radius: 10px;
+  padding: 12px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.markdown pre.code-block code {
+  font-family: var(--font-mono);
+  white-space: pre;
+}
+.markdown table.md-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.9em 0;
+  font-size: 13px;
+  display: block;
+  overflow-x: auto;
+}
+.markdown table.md-table th,
+.markdown table.md-table td {
+  border: 1px solid var(--tone-border);
+  padding: 6px 9px;
+}
+.markdown table.md-table thead th {
+  background: var(--tone-surface-2);
+  font-weight: 650;
+}
+.markdown a {
+  color: var(--tone-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.markdown strong {
+  font-weight: 680;
+}
+.markdown .katex-display {
+  margin: 0.9em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 2px;
+}
+.markdown .math-error {
+  font-family: var(--font-mono);
+  color: #b45309;
+  background: color-mix(in oklab, #b45309 10%, transparent);
+  border-radius: 6px;
+  padding: 0 4px;
+}
+.markdown .math-error-note {
+  display: block;
+  font-size: 11px;
+  color: var(--tone-muted);
+}
+
+/* Recharts inherits the theme instead of shipping its own palette. */
+.chart-tooltip {
+  background: var(--tone-surface);
+  border: 1px solid var(--tone-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  box-shadow: var(--shadow-panel);
+}
+.chart-tooltip .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+}
+.recharts-cartesian-axis-tick text {
+  fill: var(--tone-muted);
+  font-size: 11px;
+}
+.recharts-text {
+  fill: var(--tone-muted);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .panel {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
