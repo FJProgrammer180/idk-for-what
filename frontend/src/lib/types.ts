@@ -77,7 +77,7 @@ export interface ComputationLimits {
 export interface DataRetention {
   policy: string | null;
   retention_days: number | null;
-  stored_rows: number;
+  stored_rows: number | Record<string, number>;
 }
 
 export interface AiProvider {
@@ -98,7 +98,7 @@ export interface SettingsPayload {
   data_retention: DataRetention;
   ai_provider: AiProvider;
   theme_defaults: Record<string, unknown>;
-  environment: string;
+  environment: string | Record<string, unknown>;
   security: SecurityPosture;
 }
 
@@ -595,15 +595,27 @@ export interface AgentReply {
 
 // --- dashboard -------------------------------------------------------------
 
+/**
+ * The backend's recent collections are intentionally lightweight (no payloads) —
+ * the UI must accept both the full RunRow shape and the trimmed summary the
+ * dashboard actually returns. See backend/app/api/v1/insights.py :: dashboard().
+ */
+export type DashboardRun = RunRow & {
+  /** Lightweight fields the dashboard row carries instead of a full payload */
+  experiment_title?: string;
+  verification_status?: VerificationStatus | string | null;
+  headline?: unknown;
+};
+
 export interface Dashboard {
   generated_from: string;
   totals: Record<string, number>;
   runs_by_status: Partial<Record<RunStatus, number>>;
   runs_by_verification: Partial<Record<VerificationStatus, number>>;
-  method_usage: { method: string; runs: number }[];
+  method_usage: { method: string; runs: number; kind?: string }[];
   runtime: { sampled_runs?: number; mean_execution_time_ms?: number; max_execution_time_ms?: number };
-  recent_experiments: ExperimentSummary[];
-  recent_runs: RunRow[];
-  recent_sessions: AgentSessionRow[];
-  recent_agent_activity?: AgentEvent[];
+  recent_experiments: (ExperimentSummary & { headline?: unknown; verification_status?: string | null })[];
+  recent_runs: DashboardRun[];
+  recent_sessions: (AgentSessionRow & { provider?: string; model?: string })[];
+  recent_agent_activity?: (AgentEvent & { session_title?: string; summary?: Record<string, unknown> })[];
 }

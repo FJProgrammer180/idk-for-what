@@ -164,27 +164,43 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {(data?.recent_runs ?? []).map((run) => {
-                    const headline = headlineValue(run.structured_output?.result);
+                    // Dashboard rows are lightweight: structured_output may be absent. Use stored payload when present,
+                    // fall back to experiment_title / headline from the lightweight row. Never invent a value.
+                    const headline =
+                      (run as unknown as { headline?: unknown }).headline !== undefined
+                        ? String((run as unknown as { headline?: unknown }).headline ?? "—")
+                        : headlineValue(
+                            (run as { structured_output?: { result?: Record<string, unknown> } }).structured_output
+                              ?.result,
+                          );
+                    const methodLabel =
+                      (run as { structured_output?: { method?: string } }).structured_output?.method ??
+                      (run as unknown as { experiment_title?: string }).experiment_title ??
+                      run.status;
+                    const verificationStatus =
+                      (run as { verification?: { status?: string } }).verification?.status ??
+                      (run as unknown as { verification_status?: string }).verification_status ??
+                      null;
                     return (
                       <tr key={run.run_id}>
                         <td>
                           {run.experiment_id ? (
                             <Link href={`/experiments/${run.experiment_id}`} className="mono text-[12.5px] text-accent hover:underline">
-                              {run.structured_output?.method ?? run.status}
+                              {methodLabel}
                             </Link>
                           ) : (
-                            <span className="mono text-[12.5px]">{run.structured_output?.method ?? "—"}</span>
+                            <span className="mono text-[12.5px]">{methodLabel}</span>
                           )}
                         </td>
                         <td>
                           <RunBadge status={run.status} />
                         </td>
                         <td>
-                          <VerificationBadge status={run.verification?.status} />
+                          <VerificationBadge status={verificationStatus} />
                         </td>
                         <td className="mono text-[12px]">{headline}</td>
-                        <td className="whitespace-nowrap text-[12px] text-muted" title={formatDateTime(run.finished_at ?? run.created_at)}>
-                          {formatRelative(run.finished_at ?? run.created_at)}
+                        <td className="whitespace-nowrap text-[12px] text-muted" title={formatDateTime((run as unknown as { finished_at?: string }).finished_at ?? run.created_at)}>
+                          {formatRelative((run as unknown as { finished_at?: string }).finished_at ?? run.created_at)}
                         </td>
                       </tr>
                     );

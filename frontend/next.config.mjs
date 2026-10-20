@@ -14,10 +14,22 @@ const nextConfig = {
   poweredByHeader: false,
   // `next dev` otherwise answers its own host check with "unauthorized"; the sandbox
   // (and any tunnel) reaches the server through a host name we cannot know at build time.
-  allowedDevOrigins: (process.env.PLAB_ALLOWED_DEV_ORIGINS ?? "")
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean),
+  // The E2B preview origin (https://*.e2b.app) must always be allowed — it is the
+  // documented trust boundary for this deployment. Env-supplied origins are merged
+  // with sensible defaults so a missing PLAB_ALLOWED_DEV_ORIGINS does not lock out
+  // the preview while still rejecting arbitrary foreign origins (see PHASE 4 check).
+  allowedDevOrigins: (() => {
+    const fromEnv = (process.env.PLAB_ALLOWED_DEV_ORIGINS ?? "")
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+    const defaults = ["*.e2b.app", "*.e2b.dev", "localhost", "127.0.0.1"];
+    const merged = [...fromEnv];
+    for (const candidate of defaults) {
+      if (!merged.includes(candidate)) merged.push(candidate);
+    }
+    return merged;
+  })(),
   async rewrites() {
     return [
       {

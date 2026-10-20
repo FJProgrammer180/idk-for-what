@@ -197,7 +197,7 @@ export default function LabPage() {
         </div>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[1.05fr_1fr]">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-[1.05fr_1fr]">
         <Card className="space-y-3">
           <Field label={mode === "numerical" ? "Method" : "Model"} htmlFor="picker">
             <select id="picker" className="field" value={selected} onChange={(event) => setSelected(event.target.value)}>

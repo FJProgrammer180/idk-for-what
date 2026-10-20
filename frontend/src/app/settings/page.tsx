@@ -34,6 +34,32 @@ export default function SettingsPage() {
 
   const payload = settings.data;
 
+  // The backend's /settings payload uses an object for `environment` and for
+  // `data_retention.stored_rows` (see backend/app/api/v1/insights.py). The UI
+  // must render both the legacy string/number and the current object shapes
+  // without inventing values.
+  const environmentLabel =
+    typeof payload?.environment === "string"
+      ? payload.environment
+      : payload?.environment
+        ? String(
+            (payload.environment as { app_environment?: string }).app_environment ??
+              (payload.environment as { environment?: string }).environment ??
+              JSON.stringify(payload.environment),
+          )
+        : "—";
+  const storedRowsLabel = (() => {
+    const value = payload?.data_retention.stored_rows as number | Record<string, number> | null | undefined;
+    if (value == null) return "no stored rows reported";
+    if (typeof value === "number") return `${value} stored rows`;
+    if (typeof value === "object") {
+      const entries = Object.entries(value);
+      if (entries.length === 0) return "no stored rows";
+      return entries.map(([k, v]) => `${v} ${k}`).join(", ");
+    }
+    return String(value);
+  })();
+
   useEffect(() => {
     if (!payload) return;
     setDisplayName(payload.profile.display_name ?? "");
@@ -142,9 +168,9 @@ export default function SettingsPage() {
       {failure ? <Alert tone="danger">{failure}</Alert> : null}
       {notice ? <Alert tone="success">{notice}</Alert> : null}
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-2">
         <Card className="space-y-3">
-          <SectionTitle title="Profile" icon={<Save size={15} />} actions={<Badge tone="neutral">{payload.environment}</Badge>} />
+          <SectionTitle title="Profile" icon={<Save size={15} />} actions={<Badge tone="neutral">{environmentLabel}</Badge>} />
           <Field label="Display name" htmlFor="dn">
             <input id="dn" className="field" value={displayName} onChange={(event) => setDisplayName(event.target.value)} />
           </Field>
@@ -187,18 +213,18 @@ export default function SettingsPage() {
             <p className="label mb-1">Data retention</p>
             <p className="text-[12.5px] leading-relaxed text-muted">
               {payload.data_retention.retention_days
-                ? `${payload.data_retention.retention_days} day window, ${payload.data_retention.stored_rows} stored rows`
-                : "no window set (0 = keep forever)"}
+                ? `${payload.data_retention.retention_days} day window, ${storedRowsLabel}`
+                : `no window set (0 = keep forever) — ${storedRowsLabel}`}
               {payload.data_retention.policy ? ` · policy ${payload.data_retention.policy}` : ""}
             </p>
-            <div className="mt-2 flex flex-wrap items-end gap-2">
-              <Field label="days" htmlFor="pd" className="w-24">
+            <div className="mt-2 flex min-w-0 flex-wrap items-end gap-2">
+              <Field label="days" htmlFor="pd" className="w-24 shrink-0">
                 <input id="pd" className="field" inputMode="numeric" value={purgeDays} onChange={(event) => setPurgeDays(event.target.value)} />
               </Field>
-              <Button size="sm" intent="secondary" onClick={() => purge(true)} disabled={busy}>
+              <Button size="sm" intent="secondary" onClick={() => purge(true)} disabled={busy} className="shrink-0">
                 <Eraser size={14} /> preview purge
               </Button>
-              <Button size="sm" intent="danger" onClick={() => purge(false)} disabled={busy}>
+              <Button size="sm" intent="danger" onClick={() => purge(false)} disabled={busy} className="shrink-0">
                 purge now
               </Button>
             </div>

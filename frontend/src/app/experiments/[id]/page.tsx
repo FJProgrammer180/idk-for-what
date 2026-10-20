@@ -242,7 +242,7 @@ export default function ExperimentDetailPage() {
       {failure ? <Alert tone="danger">{failure}</Alert> : null}
       {notice ? <Alert tone="info">{notice}</Alert> : null}
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+      <div className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         <div className="space-y-4">
           <Card>
             <SectionTitle title="Inputs" hint="Edit and run: each press stores a new run." icon={<Wand2 size={15} />} />
